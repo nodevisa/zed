@@ -1,0 +1,13 @@
+manifest_version = 1
+
+[project]
+id = "portable-controller"
+description = "State and commands composed from a portable Properties source"
+
+[sources]
+protocol = "protocol.toml"
+properties = "properties.toml"
+
+[build]
+mode = "managed_firmware"
+board = "nucleo-c092rc"

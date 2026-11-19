@@ -1,7 +1,11 @@
-.pixi/
+# Hidden directories
+.*
 
-# rumdl's cache, from `pixi run lint`
-.rumdl_cache/
-# Notes and settings for one machine only, such as CLAUDE.local.md
+# Local extension
 *.local.*
-.DS_Store
+
+# Cargo
+target/
+
+# Compiled extension
+extension/extension.wasm

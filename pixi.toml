@@ -1,8 +1,36 @@
 [workspace]
-name = "nodevisa-zed"
 channels = ["conda-forge"]
-# The platforms conda-forge has Zed for.
-platforms = ["osx-arm64", "osx-64", "linux-64"]
+platforms = [
+  "linux-64",
+  { platform = "osx-arm64", osx = "14.2" },
+  { platform = "osx-64", osx = "14.2" },
+]
+preview = ["pixi-build"]
+
+[environments]
+default = ["lint"]
+
+[dependencies]
+rust = "*"
+rust-std-wasm32-wasip2 = { path = "rust-std-wasm32-wasip2" }
+zed = ">=1"
+
+[tasks]
+build = {
+  description = "Compiles the extension to extension/extension.wasm.",
+  cmd = """set -e
+  cargo build --release --target wasm32-wasip2
+  ln -f target/wasm32-wasip2/release/nodevisa_zed.wasm extension.wasm
+  """,
+  cwd = "extension",
+  inputs = ["extension/**", "!extension/target"],
+  outputs = ["extension/extension.wasm"]
+}
+zed = {
+  description = "Opens example/ in Zed with an isolated profile.",
+  cmd = "sh scripts/example.sh",
+  depends-on = ["build"],
+}
 
 [feature.lint.dependencies]
 prek = ">=0.5.7"
@@ -14,6 +42,3 @@ typos = ">=1.51.1"
 [feature.lint.tasks]
 lint = { cmd = "prek run --all-files", description = "Run every check on every file" }
 lint-install = { cmd = "prek install", description = "Run the checks on git commit" }
-
-[environments]
-default = ["lint"]

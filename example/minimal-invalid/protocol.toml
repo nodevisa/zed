@@ -1,0 +1,6 @@
+[protocol]
+name = "portable-controller"
+version = 0  # must be nonzero -> reported by Builder
+version_label = "1.0.0"
+max_payload = 32
+max_frame = 64

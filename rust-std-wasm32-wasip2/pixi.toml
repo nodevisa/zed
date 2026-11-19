@@ -1,0 +1,9 @@
+# Rust's standard library for the wasm32-wasip2 target, which Zed compiles extensions to.
+# conda-forge has no such package. It is the official one from static.rust-lang.org,
+# installed into the sysroot of conda-forge's `rust` (`$PREFIX/lib/rustlib`).
+[package]
+name = "rust-std-wasm32-wasip2"
+version = "1.100.0"
+
+[package.build]
+backend = { name = "pixi-build-rattler-build", version = "*" }

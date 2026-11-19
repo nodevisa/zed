@@ -1,0 +1,34 @@
+# To update, change the version and sha256 here.
+# sha256 from https://static.rust-lang.org/dist/rust-std-<version>-wasm32-wasip2.tar.xz.sha256.
+context:
+  version: "1.100.0"
+
+package:
+  name: rust-std-wasm32-wasip2
+  version: ${{ version }}
+
+source:
+  url: https://static.rust-lang.org/dist/rust-std-${{ version }}-wasm32-wasip2.tar.xz
+  sha256: 532d5210ca87ddc4a7697170524d271f51b74ff9296e25e2b2d6df436d624d6f
+
+build:
+  number: 0
+  noarch: generic
+  script:
+    - mkdir -p $PREFIX/lib/rustlib
+    - cp -R rust-std-wasm32-wasip2/lib/rustlib/wasm32-wasip2 $PREFIX/lib/rustlib/
+
+requirements:
+  run_constraints:
+    # The standard library only works with the compiler of the same version.
+    - rust ==${{ version }}
+
+tests:
+  - package_contents:
+      files:
+        - lib/rustlib/wasm32-wasip2/lib/libstd-*.rlib
+
+about:
+  homepage: https://www.rust-lang.org
+  license: MIT OR Apache-2.0
+  summary: Rust standard library for the wasm32-wasip2 target

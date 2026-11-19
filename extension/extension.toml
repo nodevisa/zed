@@ -1,0 +1,13 @@
+id = "nodevisa"
+name = "nodevisa"
+description = "Language server client for Nodevisa TOML files"
+version = "0.1.0"
+schema_version = 1
+repository = "https://github.com/nodevisa/zed"
+authors = ["Mauro Silberberg <maurosilber@nodevisa.com>"]
+
+# Zed attaches language servers to a language, not to a file pattern.
+# Its id is the key of its settings, `lsp.nodevisa`.
+[language_servers.nodevisa]
+name = "Nodevisa"
+languages = ["TOML"]

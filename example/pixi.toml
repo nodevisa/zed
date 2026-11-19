@@ -1,0 +1,6 @@
+[workspace]
+channels = ["https://packages.nodevisa.com/nodevisa/main", "conda-forge"]
+platforms = ["osx-arm64", "linux-64", "win-64"]
+
+[dependencies]
+nodevisa-build = ">=0.2.0"
