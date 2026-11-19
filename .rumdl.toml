@@ -1,0 +1,3 @@
+[global]
+# Lines break at sentences and clauses (semantic line feeds), not at a fixed width.
+disable = ["MD013"]

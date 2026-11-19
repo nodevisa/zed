@@ -1,0 +1,19 @@
+[workspace]
+name = "nodevisa-zed"
+channels = ["conda-forge"]
+# The platforms conda-forge has Zed for.
+platforms = ["osx-arm64", "osx-64", "linux-64"]
+
+[feature.lint.dependencies]
+prek = ">=0.5.7"
+tombi = ">=1.9.5"
+biome = ">=2.6.3"
+rumdl = ">=0.3.0"
+typos = ">=1.51.1"
+
+[feature.lint.tasks]
+lint = { cmd = "prek run --all-files", description = "Run every check on every file" }
+lint-install = { cmd = "prek install", description = "Run the checks on git commit" }
+
+[environments]
+default = ["lint"]

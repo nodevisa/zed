@@ -1,0 +1,9 @@
+{
+  "rust-analyzer.server.extraEnv": {
+    "PATH": "${workspaceFolder}/.pixi/envs/default/bin:/usr/bin"
+  },
+  "rust-analyzer.linkedProjects": ["extension/Cargo.toml"],
+  "rust-analyzer.cargo.target": "wasm32-wasip2",
+  "rust-analyzer.check.command": "clippy",
+  "tombi.path": ".pixi/envs/default/bin/tombi"
+}

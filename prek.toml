@@ -1,0 +1,84 @@
+default_install_hook_types = ["pre-commit", "commit-msg"]
+# Only the hooks of `commit-msg` see a commit's message, rather than its files.
+default_stages = ["pre-commit", "pre-push", "manual"]
+
+[[repos]]
+repo = "builtin"
+hooks = [
+  { id = "check-added-large-files", args = ["--maxkb=1024"] },
+  { id = "check-case-conflict" },
+  { id = "check-illegal-windows-names" },
+  { id = "check-json" },
+  { id = "check-merge-conflict", args = ["--assume-in-merge"] },
+  { id = "check-toml" },
+  { id = "check-yaml" },
+  { id = "detect-private-key" },
+  { id = "end-of-file-fixer" },
+  { id = "fix-byte-order-marker" },
+  { id = "mixed-line-ending", args = ["--fix=lf"] },
+  { id = "trailing-whitespace", args = ["--markdown-linebreak-ext=md"] },
+]
+
+[[repos]]
+repo = "local"
+
+# A commit is its author's alone: no `Co-authored-by:` trailer in its message.
+[[repos.hooks]]
+id = "no-co-authors"
+name = "Deny Co-authored-by trailers in commit messages"
+language = "pygrep"
+entry = "^co-authored-by:"
+args = ["--ignore-case"]
+stages = ["commit-msg"]
+
+[[repos.hooks]]
+id = "toml-format"
+name = "Format TOML files with Tombi"
+language = "system"
+entry = "pixi run tombi format"
+files.glob = "*.toml"
+
+[[repos.hooks]]
+id = "toml-lint"
+name = "Lint TOML files with Tombi"
+language = "system"
+entry = "pixi run tombi lint"
+files.glob = "*.toml"
+
+[[repos.hooks]]
+id = "biome"
+name = "Format and lint JSON with Biome"
+language = "system"
+entry = "pixi run biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
+types = ["json"]
+
+[[repos.hooks]]
+id = "markdown"
+name = "Format and lint Markdown files with rumdl"
+language = "system"
+entry = "pixi run rumdl check --fix"
+types = ["markdown"]
+
+[[repos.hooks]]
+id = "typos"
+name = "Check spelling with typos"
+language = "system"
+entry = "pixi run typos --force-exclude"
+types = ["text"]
+
+[[repos.hooks]]
+id = "rustfmt"
+name = "Format Rust files with rustfmt"
+language = "system"
+entry = "pixi run cargo fmt --all --manifest-path extension/Cargo.toml"
+types = ["rust"]
+pass_filenames = false
+
+# For the target Zed builds the extension for, as `pixi run build` does.
+[[repos.hooks]]
+id = "clippy"
+name = "Lint Rust files with Clippy"
+language = "system"
+entry = "pixi run cargo clippy --manifest-path extension/Cargo.toml --target wasm32-wasip2 --all-targets -- -D warnings"
+types = ["rust"]
+pass_filenames = false
